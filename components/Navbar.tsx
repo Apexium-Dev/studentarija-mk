@@ -3,9 +3,26 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Search, User } from "lucide-react";
+import { useAuth } from "@/lib/auth/useAuth";
+import { useRouter } from "next/navigation";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const { user, signOut } = useAuth();
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    try {
+      await signOut();
+      router.push("/login");
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
+
+  const handleLoginClick = () => {
+    router.push("/login");
+  };
 
   return (
     <nav className="w-full bg-white border-b border-[#E2E8F0]">
@@ -34,9 +51,21 @@ export default function Navbar() {
             <User size={18} className="text-[#1E293B]" />
           </button>
 
-          <button className="bg-[#4ADE80] text-white px-4 py-2 rounded-md text-sm font-semibold hover:bg-[#22c55e] transition">
-            Најави се
-          </button>
+          {user ? (
+            <button
+              onClick={handleLogout}
+              className="bg-red-600 text-white px-4 py-2 rounded-md text-sm font-semibold hover:bg-red-700 transition"
+            >
+              Одјави се
+            </button>
+          ) : (
+            <button
+              onClick={handleLoginClick}
+              className="bg-[#4ADE80] text-white px-4 py-2 rounded-md text-sm font-semibold hover:bg-[#22c55e] transition"
+            >
+              Најави се
+            </button>
+          )}
 
           <button
             className="md:hidden text-[#1E293B] text-xl"
