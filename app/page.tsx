@@ -3,6 +3,7 @@ import Hero from "@/components/Hero";
 import Navbar from "@/components/Navbar";
 import QuickNavigation from "@/components/QuickNavigation";
 import PostsSection from "@/components/PostsSection";
+import NewsletterCTA from "@/components/NewsletterCTA";
 
 export default function Home() {
   const announcements = [
@@ -48,6 +49,7 @@ export default function Home() {
       <Hero />
       <QuickNavigation />
       <PostsSection />
+      <NewsletterCTA />
     </main>
   );
 }

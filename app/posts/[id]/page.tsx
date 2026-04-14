@@ -6,6 +6,7 @@ import { Clock, Heart, Bookmark, Share2, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { supabase } from "@/lib/supabaseClient";
 import Navbar from "@/components/Navbar";
+import NewsletterCTA from "@/components/NewsletterCTA";
 
 interface Post {
   id: string;
@@ -67,6 +68,32 @@ export default function PostPage({
     if (diffHours < 24) return `пред ${diffHours} часа`;
     if (diffDays < 7) return `пред ${diffDays} дена`;
     return postDate.toLocaleDateString("mk-MK");
+  };
+
+  const handleShare = async () => {
+    const shareUrl = `${window.location.origin}/posts/${id}`;
+
+    if (navigator.share) {
+      // Use native share API if available
+      try {
+        await navigator.share({
+          title: post?.title,
+          text: post?.title,
+          url: shareUrl,
+        });
+      } catch (err) {
+        console.error("Error sharing:", err);
+      }
+    } else {
+      // Fallback: copy to clipboard
+      try {
+        await navigator.clipboard.writeText(shareUrl);
+        alert("Линкот е копиран во clipboard!");
+      } catch (err) {
+        console.error("Error copying to clipboard:", err);
+        alert("Не може да се копира линкот");
+      }
+    }
   };
 
   if (loading) {
@@ -174,6 +201,8 @@ export default function PostPage({
             className="p-2 rounded-full bg-gray-900 hover:bg-gray-800 transition text-white"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
+            onClick={handleShare}
+            title="Дели"
           >
             <Share2 size={18} />
           </motion.button>
@@ -227,6 +256,11 @@ export default function PostPage({
           </div>
         </div>
       </motion.article>
+
+      {/* Newsletter CTA */}
+      <div className="mx-auto max-w-4xl px-6">
+        <NewsletterCTA />
+      </div>
     </div>
   );
 }
