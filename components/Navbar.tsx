@@ -49,38 +49,44 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="w-full bg-gradient-to-r from-white to-[#F8FAFC] border-b border-[#E2E8F0] shadow-sm sticky top-0 z-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-            <Link href="/" className="shrink-0 flex items-center gap-2 group">
-              <div className="w-10 h-10 bg-linear-to-br from-[#166534] to-[#15803d] rounded-lg flex items-center justify-center group-hover:shadow-lg transition-all">
-                <span className="text-white font-bold text-lg">С</span>
-              </div>
-              <span className="text-xl font-bold bg-linear-to-r from-[#166534] to-[#15803d] bg-clip-text text-transparent hidden sm:block">
-                Студентарија.мк
-              </span>
-            </Link>
-          </motion.div>
+    <nav className="w-full bg-linear-to-r from-white to-[#F8FAFC] border-b border-[#E2E8F0] shadow-sm sticky top-0 z-50">
+      <div className="w-full px-0">
+        <div className="flex items-center justify-between h-16 px-6">
+          {/* Left Side: Logo + Nav Links */}
+          <div className="flex items-center gap-8">
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Link href="/" className="shrink-0 flex items-center gap-2 group">
+                <img
+                  src="/logo.png"
+                  alt="Studentarija Logo"
+                  className="w-10 h-10"
+                />
+                <span className="text-xl font-bold bg-linear-to-r from-[#166534] to-[#15803d] bg-clip-text text-transparent hidden sm:block">
+                  Studentarija
+                </span>
+              </Link>
+            </motion.div>
 
-          <div className="hidden md:flex items-center gap-1">
-            {navLinks.map((link, index) => (
-              <motion.div
-                key={link.href}
-                initial={{ opacity: 0, y: -10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.05 }}
-              >
-                <Link
-                  href={link.href}
-                  className="px-3 py-2 text-sm font-medium text-[#1E293B] rounded-md hover:bg-[#E2E8F0] hover:text-[#166534] transition-all duration-200"
+            <div className="hidden md:flex items-center gap-1">
+              {navLinks.map((link, index) => (
+                <motion.div
+                  key={link.href}
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.05 }}
                 >
-                  {link.label}
-                </Link>
-              </motion.div>
-            ))}
+                  <Link
+                    href={link.href}
+                    className="px-3 py-2 text-sm font-medium text-[#1E293B] rounded-md hover:bg-[#E2E8F0] hover:text-[#166534] transition-all duration-200"
+                  >
+                    {link.label}
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
           </div>
 
+          {/* Right Side: Search + User Menu */}
           <div className="flex items-center gap-2 sm:gap-4">
             <motion.button
               whileHover={{ scale: 1.1 }}
