@@ -145,21 +145,29 @@ const AdminPostForm = () => {
         }
       } catch {
         try {
+          const { data: users, error: usersError } = await supabase
+            .from("users")
+            .select("id, email, created_at");
+
           const { data: adminUsers } = await supabase
             .from("admin_users")
             .select("user_id, is_admin");
 
-          if (adminUsers && adminUsers.length > 0) {
-            const usersList = adminUsers.map((a) => ({
-              id: a.user_id,
-              email: "Admin User",
-              created_at: new Date().toISOString(),
-              is_admin: a.is_admin,
+          if (users && users.length > 0) {
+            const adminMap = new Map(
+              (adminUsers || []).map((a) => [a.user_id, a.is_admin]),
+            );
+
+            const usersList = users.map((u) => ({
+              id: u.id,
+              email: u.email,
+              created_at: u.created_at,
+              is_admin: adminMap.get(u.id) || false,
             }));
             setUsers(usersList);
           }
         } catch {
-          // Fallback failed, users will remain empty
+          // Both API and fallback failed
         }
       } finally {
         setUsersLoading(false);
