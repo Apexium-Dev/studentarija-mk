@@ -40,6 +40,5 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-#md
-NEWSLETTER_SETUP.md
-TODO_NEWSLETTER.md
+#md folder
+SETUPS/
