@@ -20,6 +20,8 @@ import {
   Upload,
   AlertCircle,
   Rocket,
+  ChevronLeft,
+  ChevronRight,
 } from "lucide-react";
 
 const SidebarItem = ({
@@ -93,14 +95,30 @@ const AdminPostForm = () => {
     Array<{ id: string; email: string; created_at: string; is_admin: boolean }>
   >([]);
   const [usersLoading, setUsersLoading] = useState(false);
+  const [studentCount, setStudentCount] = useState(0);
+  const [dailyEngagement, setDailyEngagement] = useState(0);
+  const [engagementTrend, setEngagementTrend] = useState(true); // true = above average
+  const [weeklyData, setWeeklyData] = useState<
+    { date: string; count: number; percentage: number }[]
+  >([]);
+  const [selectedDayIndex, setSelectedDayIndex] = useState(6); // today is last bar
+  const [selectedDayDetail, setSelectedDayDetail] = useState<{
+    count: number;
+    percentage: number;
+    dateStr: string;
+  } | null>(null);
 
   const categories = ["ВЕСТ", "СТИПЕНДИИ", "ДОМОВИ", "НАСТАВА"];
 
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const { count } = await supabase
+        const { count: postCount } = await supabase
           .from("posts")
+          .select("id", { count: "exact" });
+
+        const { count: userCount } = await supabase
+          .from("users")
           .select("id", { count: "exact" });
 
         const { data: posts } = await supabase
@@ -109,7 +127,64 @@ const AdminPostForm = () => {
           .order("created_at", { ascending: false })
           .limit(3);
 
-        setPostCount(count || 0);
+        // Fetch weekly data (last 7 days)
+        const weeklyPostCounts: {
+          date: string;
+          count: number;
+          percentage: number;
+        }[] = [];
+        let totalPostsLastWeek = 0;
+        let avgDailyPosts = 0;
+
+        for (let i = 6; i >= 0; i--) {
+          const date = new Date();
+          date.setDate(date.getDate() - i);
+          date.setHours(0, 0, 0, 0);
+          const nextDay = new Date(date);
+          nextDay.setDate(nextDay.getDate() + 1);
+
+          const { count: dayPostCount } = await supabase
+            .from("posts")
+            .select("id", { count: "exact" })
+            .gte("created_at", date.toISOString())
+            .lt("created_at", nextDay.toISOString());
+
+          weeklyPostCounts.push({
+            date: date.toISOString().split("T")[0],
+            count: dayPostCount || 0,
+            percentage: 0,
+          });
+          totalPostsLastWeek += dayPostCount || 0;
+        }
+
+        avgDailyPosts = Math.round(totalPostsLastWeek / 7);
+
+        // Calculate percentages
+        const dataWithPercentages = weeklyPostCounts.map((d) => ({
+          ...d,
+          percentage:
+            avgDailyPosts > 0
+              ? Math.min(100, Math.round((d.count / avgDailyPosts) * 100))
+              : 0,
+        }));
+
+        setWeeklyData(dataWithPercentages);
+        setSelectedDayIndex(6);
+        const todayData = dataWithPercentages[6];
+        setSelectedDayDetail({
+          count: todayData.count,
+          percentage: todayData.percentage,
+          dateStr: new Date(todayData.date).toLocaleDateString("en-US", {
+            weekday: "short",
+            month: "short",
+            day: "numeric",
+          }),
+        });
+
+        setPostCount(postCount || 0);
+        setStudentCount(userCount || 0);
+        setDailyEngagement(todayData.percentage);
+        setEngagementTrend(todayData.count >= avgDailyPosts);
         setRecentPosts(posts || []);
       } catch (err) {
         console.error("Error fetching stats:", err);
@@ -118,6 +193,29 @@ const AdminPostForm = () => {
 
     fetchStats();
   }, [success]);
+
+  const handleBarClick = (index: number) => {
+    if (!weeklyData || weeklyData.length === 0) return;
+
+    const data = weeklyData[index];
+    if (!data) return;
+
+    setSelectedDayIndex(index);
+    setSelectedDayDetail({
+      count: data.count,
+      percentage: data.percentage,
+      dateStr: new Date(data.date).toLocaleDateString("en-US", {
+        weekday: "short",
+        month: "short",
+        day: "numeric",
+      }),
+    });
+  };
+
+  const navigateDate = (direction: 1 | -1) => {
+    const newIndex = Math.max(0, Math.min(6, selectedDayIndex + direction));
+    handleBarClick(newIndex);
+  };
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -363,19 +461,10 @@ const AdminPostForm = () => {
                 <StatCard
                   icon={Users}
                   label="Active Students"
-                  value="8,502"
+                  value={studentCount.toLocaleString()}
                   growth="8.2"
                   colorClass="bg-indigo-400"
                 />
-                <div className="bg-emerald-300 p-6 rounded-3xl flex-1 text-emerald-900 relative overflow-hidden">
-                  <Upload size={20} className="mb-10" />
-                  <p className="text-sm font-medium opacity-80">
-                    Recent Uploads
-                  </p>
-                  <p className="text-3xl font-bold">
-                    342 <span className="text-sm font-normal">this week</span>
-                  </p>
-                </div>
               </div>
 
               {/* Bottom Section */}
@@ -424,40 +513,80 @@ const AdminPostForm = () => {
                 <div className="space-y-6">
                   {/* Performance Card */}
                   <div className="bg-slate-900 text-white p-6 rounded-[2.5rem]">
-                    <p className="text-xs opacity-60 mb-1">Daily Engagement</p>
-                    <p className="text-4xl font-bold mb-4">94%</p>
-                    <p className="text-emerald-400 text-xs mb-6">
-                      ↗ Above average
-                    </p>
-                    {/* Fake Chart Bars */}
-                    <div className="flex items-end justify-between h-16 mb-6">
-                      {[30, 45, 100, 60, 40].map((h, i) => (
-                        <div
-                          key={i}
-                          className={`w-4 rounded-full ${
-                            i === 2 ? "bg-emerald-400" : "bg-slate-700"
-                          }`}
-                          style={{ height: `${h}%` }}
-                        />
-                      ))}
+                    <div className="flex justify-between items-start mb-4">
+                      <div>
+                        <p className="text-xs opacity-60 mb-1">
+                          Daily Engagement
+                        </p>
+                        <p className="text-4xl font-bold">
+                          {selectedDayDetail?.percentage || dailyEngagement}%
+                        </p>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => navigateDate(-1)}
+                          disabled={selectedDayIndex === 0}
+                          className="p-1 hover:bg-white/10 rounded-lg disabled:opacity-30 disabled:cursor-not-allowed transition"
+                        >
+                          <ChevronLeft size={18} />
+                        </button>
+                        <button
+                          onClick={() => navigateDate(1)}
+                          disabled={selectedDayIndex === 6}
+                          className="p-1 hover:bg-white/10 rounded-lg disabled:opacity-30 disabled:cursor-not-allowed transition"
+                        >
+                          <ChevronRight size={18} />
+                        </button>
+                      </div>
                     </div>
-                    <button className="w-full bg-white/10 py-3 rounded-2xl text-sm font-bold hover:bg-white/20 transition-colors">
-                      Download Full Report
-                    </button>
-                  </div>
 
-                  {/* Growth Card */}
-                  <div className="bg-slate-100 p-8 rounded-[2.5rem] text-center">
-                    <div className="bg-white w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-sm">
-                      <Rocket className="text-emerald-500" size={24} />
-                    </div>
-                    <h4 className="font-bold mb-2">Platform Growth</h4>
-                    <p className="text-xs text-slate-500 mb-4 leading-relaxed">
-                      New tools are ready for your review to boost student
-                      interaction.
+                    <p className="text-xs mb-4 text-slate-300">
+                      {selectedDayDetail?.dateStr} •{" "}
+                      {selectedDayDetail?.count || 0} posts
                     </p>
-                    <button className="text-emerald-500 text-xs font-bold underline hover:no-underline">
-                      See what&apos;s new
+                    <p
+                      className={`text-xs mb-6 font-semibold ${
+                        (selectedDayDetail?.percentage || 0) >= 100
+                          ? "text-emerald-400"
+                          : "text-red-400"
+                      }`}
+                    >
+                      {(selectedDayDetail?.percentage || 0) >= 100
+                        ? "↗ Above average"
+                        : "↘ Below average"}
+                    </p>
+
+                    {/* Interactive Chart Bars */}
+                    <div className="flex items-end justify-between h-20 mb-6 gap-1">
+                      {weeklyData && weeklyData.length > 0 ? (
+                        weeklyData.map((day, i) => (
+                          <motion.button
+                            key={i}
+                            onClick={() => handleBarClick(i)}
+                            disabled={!weeklyData || weeklyData.length === 0}
+                            className={`w-full rounded-lg transition-all cursor-pointer ${
+                              selectedDayIndex === i
+                                ? "bg-emerald-400"
+                                : "bg-slate-700 hover:bg-slate-600"
+                            }`}
+                            style={{
+                              height: `${Math.max(10, day.percentage)}%`,
+                            }}
+                            whileHover={{ scale: 1.1 }}
+                            title={`${day.date}: ${day.count} posts (${day.percentage}%)`}
+                          />
+                        ))
+                      ) : (
+                        <div className="w-full flex items-center justify-center text-xs text-slate-500">
+                          Loading chart...
+                        </div>
+                      )}
+                    </div>
+                    <p className="text-xs opacity-50 text-center mb-4">
+                      Last 7 days
+                    </p>
+                    <button className="w-full bg-white/10 py-2 rounded-2xl text-xs font-bold hover:bg-white/20 transition-colors">
+                      View Full Analytics
                     </button>
                   </div>
                 </div>
