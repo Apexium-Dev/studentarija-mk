@@ -33,7 +33,7 @@ A modern full-stack web application for managing student content, posts, and use
 ### 1. Clone the Repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/Apexium-Dev/studentarija-mk
 cd studentarija-mk
 ```
 
