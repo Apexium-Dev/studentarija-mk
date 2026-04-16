@@ -96,7 +96,6 @@ export default function AllPostsFeed() {
       СТИПЕНДИИ: "bg-blue-500 text-white",
       ДОМОВИ: "bg-purple-500 text-white",
       НАСТАВА: "bg-orange-500 text-white",
-      СОБЫТИЕ: "bg-pink-500 text-white",
     };
     return colors[category] || "bg-gray-500 text-white";
   };
