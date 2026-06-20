@@ -9,20 +9,20 @@ export interface DropdownItem {
 }
 
 export const aktuelnoItems: DropdownItem[] = [
-  { label: 'Стипендии',              href: '/stipendii' },
-  { label: 'ЈСП',                    href: '/jsp' },
-  { label: 'Уписи 2025/26',         href: '/upisi-2025-26' },
-  { label: 'Придружи се',            href: '/pridruzi-se' },
-  { label: 'Продолжување стипендија', href: '/prodolzuvanje-stipendija' },
-  { label: 'Бруцоши',               href: '/brucosi' },
-  { label: 'Студентски домови',      href: '/studentski-domovi' },
-  { label: 'Студентски оброк',       href: '/page/subvencioniran-obrok' },
+  { label: 'Стипендии',              href: '/scholarships' },
+  { label: 'ЈСП',                    href: '/public-transport' },
+  { label: 'Уписи 2025/26',         href: '/enrollment-2025-26' },
+  { label: 'Придружи се',            href: '/join' },
+  { label: 'Продолжување стипендија', href: '/scholarship-renewal' },
+  { label: 'Бруцоши',               href: '/freshmen' },
+  { label: 'Студентски домови',      href: '/student-dorms' },
+  { label: 'Студентски оброк',       href: '/student-meal' },
 ]
 
 export const navLinks: NavLink[] = [
   { label: 'Настани',  href: '/events' },
-  { label: 'Новости',  href: '/novosti' },
-  { label: 'Партнери', href: '/partneri' },
+  { label: 'Новости',  href: '/news' },
+  { label: 'Партнери', href: '/partners' },
   { label: 'FAQ',      href: '/faq' },
-  { label: 'За нас',   href: '/za-nas' },
+  { label: 'За нас',   href: '/about' },
 ]
