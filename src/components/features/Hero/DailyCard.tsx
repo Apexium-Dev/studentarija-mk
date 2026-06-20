@@ -9,6 +9,7 @@ const FALLBACK: DailyMessage = {
   id: '0',
   message: 'Единствената личност со која треба да се споредуваш си ти од вчера.',
   author: 'Студентарија',
+  active: true,
   created_at: new Date().toISOString(),
 }
 
