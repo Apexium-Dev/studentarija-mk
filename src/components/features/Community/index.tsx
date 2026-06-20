@@ -3,14 +3,49 @@
 import { useRef, useEffect, useState } from 'react'
 import { useInView } from 'motion/react'
 import { motion } from 'motion/react'
-import { Instagram, Music2, Facebook, Linkedin } from 'lucide-react'
 import Link from 'next/link'
 
+function IgIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round">
+      <rect x="2" y="2" width="20" height="20" rx="5" />
+      <circle cx="12" cy="12" r="4" />
+      <circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" />
+    </svg>
+  )
+}
+
+function TkIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor">
+      <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.3 6.3 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.76a4.85 4.85 0 0 1-1.01-.07z" />
+    </svg>
+  )
+}
+
+function FbIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor">
+      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
+    </svg>
+  )
+}
+
+function LiIcon() {
+  return (
+    <svg viewBox="0 0 24 24" className="w-4 h-4" fill="currentColor">
+      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+      <rect x="2" y="9" width="4" height="12" />
+      <circle cx="4" cy="4" r="2" />
+    </svg>
+  )
+}
+
 const socials = [
-  { label: 'INSTAGRAM', icon: Instagram,  href: 'https://instagram.com' },
-  { label: 'TIKTOK',    icon: Music2,      href: 'https://tiktok.com' },
-  { label: 'FACEBOOK',  icon: Facebook,    href: 'https://facebook.com' },
-  { label: 'LINKEDIN',  icon: Linkedin,    href: 'https://linkedin.com' },
+  { label: 'INSTAGRAM', icon: IgIcon, href: 'https://instagram.com' },
+  { label: 'TIKTOK',    icon: TkIcon, href: 'https://tiktok.com' },
+  { label: 'FACEBOOK',  icon: FbIcon, href: 'https://facebook.com' },
+  { label: 'LINKEDIN',  icon: LiIcon, href: 'https://linkedin.com' },
 ]
 
 function Counter({ to, suffix = '' }: { to: number; suffix?: string }) {
@@ -139,7 +174,9 @@ export default function CommunitySection() {
             rel="noopener noreferrer"
             className="group flex items-center gap-2.5 h-12 px-6 bg-[#111111] hover:bg-[#1a1a1a] border border-white/8 hover:border-white/20 rounded-xl transition-all"
           >
-            <Icon className="w-4 h-4 text-white/60 group-hover:text-white transition-colors" />
+            <span className="text-white/60 group-hover:text-white transition-colors flex items-center">
+              <Icon />
+            </span>
             <span className="font-display text-[11px] tracking-widest uppercase text-white/60 group-hover:text-white transition-colors">
               {label}
             </span>
