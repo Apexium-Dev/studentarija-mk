@@ -45,8 +45,11 @@ export default function LatestNews() {
         </Link>
       </div>
 
-      {/* Infinite scroll track */}
-      <div className="news-scroll-wrapper pb-20">
+      {/* Infinite scroll track — left edge matches header content */}
+      <div
+        className="news-scroll-wrapper pb-20 overflow-hidden"
+        style={{ paddingLeft: 'max(1.5rem, calc((100vw - 80rem) / 2 + 1.5rem))' }}
+      >
         <div className="news-scroll flex gap-5" style={{ width: 'max-content' }}>
           {DOUBLED.map((item, i) => (
             <motion.div
