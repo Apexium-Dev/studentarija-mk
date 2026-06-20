@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Anton } from "next/font/google";
+import { Geist, Geist_Mono, Oswald } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/ui/Navbar";
 import { ThemeProvider } from "@/components/ui/ThemeProvider";
@@ -15,9 +15,9 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-const anton = Anton({
-  weight: "400",
-  subsets: ["latin"],
+const oswald = Oswald({
+  weight: "700",
+  subsets: ["latin", "cyrillic"],
   variable: "--font-display",
 });
 
@@ -34,7 +34,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} ${anton.variable} h-full antialiased`}
+      className={`${geistSans.variable} ${geistMono.variable} ${oswald.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">
           <LanguageProvider>
