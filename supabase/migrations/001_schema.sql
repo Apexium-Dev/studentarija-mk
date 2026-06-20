@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS public.posts (
   excerpt     TEXT,
   cover_url   TEXT,
   category    VARCHAR(100),
-  author_id   UUID NOT NULL REFERENCES public.profiles(id) ON DELETE SET NULL,
+  author_id   UUID REFERENCES public.profiles(id) ON DELETE SET NULL,
   published   BOOLEAN NOT NULL DEFAULT FALSE,
   created_at  TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at  TIMESTAMPTZ NOT NULL DEFAULT NOW()
@@ -47,7 +47,7 @@ CREATE TABLE IF NOT EXISTS public.events (
   location     TEXT,
   city         VARCHAR(100),
   category     VARCHAR(50), -- 'party' | 'workshop' | 'sports' | 'other'
-  created_by   UUID NOT NULL REFERENCES public.profiles(id) ON DELETE SET NULL,
+  created_by   UUID REFERENCES public.profiles(id) ON DELETE SET NULL,
   published    BOOLEAN NOT NULL DEFAULT FALSE,
   created_at   TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at   TIMESTAMPTZ NOT NULL DEFAULT NOW()
