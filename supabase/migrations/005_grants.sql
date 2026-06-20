@@ -15,7 +15,7 @@ GRANT SELECT ON public.posts          TO authenticated;
 GRANT SELECT ON public.events         TO authenticated;
 GRANT SELECT ON public.announcements  TO authenticated;
 GRANT SELECT ON public.daily_messages TO authenticated;
-GRANT UPDATE ON public.profiles       TO authenticated;
+GRANT UPDATE (full_name, avatar_url) ON public.profiles TO authenticated;
 
 -- SERVICE ROLE: full access (used server-side only)
 GRANT ALL ON public.profiles          TO service_role;
