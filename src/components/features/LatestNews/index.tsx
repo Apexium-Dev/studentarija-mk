@@ -14,35 +14,61 @@ export default function LatestNews() {
     <section className="bg-[var(--bg-main)] border-t border-[var(--border-main)] overflow-hidden">
 
       {/* Header */}
-      <div className="max-w-7xl mx-auto px-6 pt-20 pb-12 flex items-end justify-between gap-8">
-        <div>
-          <div className="flex items-center gap-3 mb-6">
-            <div className="h-px w-8 bg-primary" />
-            <span className="bg-primary text-dark text-[11px] font-black uppercase tracking-[0.3em] px-3 py-1">
+      <div className="max-w-7xl mx-auto px-6 pt-20 pb-12">
+
+        {/* Top row — label + count + CTA */}
+        <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center gap-4">
+            {/* Live dot */}
+            <span className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
+            </span>
+            <span className="text-[11px] font-black uppercase tracking-[0.3em] text-[var(--text-muted)]">
               Актуелно
             </span>
+            <span className="text-[11px] font-black text-primary/50">
+              — {news.length} вести
+            </span>
           </div>
-          <div>
-            <div className="inline-block bg-primary px-4 py-1 mb-1">
-              <span className="font-display text-[clamp(2.4rem,4.5vw,5rem)] uppercase leading-none tracking-tight text-dark">
-                Последни
-              </span>
-            </div>
-            <div className="block">
-              <span className="font-display text-[clamp(2.4rem,4.5vw,5rem)] uppercase leading-none tracking-tight text-[var(--text-main)] italic">
-                Вести
-              </span>
-            </div>
-          </div>
+
+          <Link
+            href="/news"
+            className="group flex items-center gap-2 text-[11px] font-black uppercase tracking-widest text-[var(--text-muted)] hover:text-primary transition-colors"
+          >
+            Види ги сите
+            <ArrowRight className="w-3.5 h-3.5 text-primary group-hover:translate-x-1 transition-transform" />
+          </Link>
         </div>
 
-        <Link
-          href="/news"
-          className="shrink-0 group flex items-center gap-2 h-10 px-5 border border-[var(--border-main)] hover:border-primary/40 hover:bg-[var(--hover-bg)] transition-all text-[11px] font-black uppercase tracking-widest text-[var(--text-muted)] hover:text-[var(--text-main)]"
-        >
-          Види ги сите
-          <ArrowRight className="w-3.5 h-3.5 text-primary group-hover:translate-x-1 transition-transform" />
-        </Link>
+        {/* Main heading */}
+        <div className="relative">
+          {/* Watermark number */}
+          <span className="absolute -top-4 right-0 font-display text-[clamp(6rem,18vw,16rem)] leading-none text-[var(--border-main)] select-none pointer-events-none">
+            {String(news.length).padStart(2, '0')}
+          </span>
+
+          {/* Line 1 */}
+          <div className="flex items-center gap-6 mb-1">
+            <span className="font-display text-[clamp(3rem,7vw,7.5rem)] uppercase leading-none tracking-tight text-[var(--text-main)]">
+              Последни
+            </span>
+            {/* Yellow extending line */}
+            <motion.div
+              className="h-[6px] bg-primary flex-1"
+              initial={{ scaleX: 0 }}
+              whileInView={{ scaleX: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              style={{ transformOrigin: 'left' }}
+            />
+          </div>
+
+          {/* Line 2 */}
+          <span className="font-display text-[clamp(3rem,7vw,7.5rem)] uppercase leading-none tracking-tight text-primary italic">
+            Вести
+          </span>
+        </div>
       </div>
 
       {/* Infinite scroll track */}
