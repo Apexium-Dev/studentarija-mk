@@ -95,13 +95,14 @@ export default function LatestNews() {
         </div>
 
         {/* CTA */}
-        <div className="flex justify-between items-center mt-10 pt-6 border-t border-[var(--border-main)]">
-          <span className="text-[11px] font-black uppercase tracking-widest text-[var(--text-muted)]">
-            Прикажани 5 од {news.length}
-          </span>
-          <Link href="/news" className="group flex items-center gap-2 text-[11px] font-black uppercase tracking-widest text-[var(--text-main)] hover:text-primary transition-colors">
-            Сите вести
-            <ArrowUpRight className="w-4 h-4 text-primary group-hover:rotate-45 transition-transform" />
+        <div className="flex justify-center mt-12">
+          <Link
+            href="/news"
+            className="group relative overflow-hidden flex items-center gap-3 h-14 px-10 font-black text-[12px] uppercase tracking-[0.2em] border-2 border-primary text-primary hover:text-dark transition-colors duration-300"
+          >
+            <span className="absolute inset-0 bg-primary -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out" />
+            <span className="relative">Сите вести</span>
+            <ArrowUpRight className="relative w-4 h-4 group-hover:rotate-45 transition-transform duration-300" />
           </Link>
         </div>
 
