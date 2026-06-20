@@ -48,9 +48,6 @@ export default function LatestNews() {
             <span className="text-[11px] font-black uppercase tracking-[0.3em] text-[var(--text-muted)]">
               Актуелно
             </span>
-            <span className="text-[11px] font-black text-primary/50">
-              — {news.length} вести
-            </span>
           </div>
 
           <Link
