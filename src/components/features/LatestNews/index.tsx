@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState, useCallback } from 'react'
+import { useRef, useState, useCallback, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react'
@@ -11,9 +11,12 @@ import { news, categoryColors } from './news'
 const CARD_WIDTH = 320
 const GAP = 20
 
+const INTERVAL = 3000
+
 export default function LatestNews() {
   const trackRef = useRef<HTMLDivElement>(null)
   const [activeIndex, setActiveIndex] = useState(0)
+  const [paused, setPaused] = useState(false)
 
   const scrollTo = useCallback((index: number) => {
     const clamped = Math.max(0, Math.min(index, news.length - 1))
@@ -25,7 +28,19 @@ export default function LatestNews() {
   }, [])
 
   const prev = () => scrollTo(activeIndex - 1)
-  const next = () => scrollTo(activeIndex + 1)
+  const next = useCallback(() => {
+    setActiveIndex(i => {
+      const nextIndex = (i + 1) % news.length
+      trackRef.current?.scrollTo({ left: nextIndex * (CARD_WIDTH + GAP), behavior: 'smooth' })
+      return nextIndex
+    })
+  }, [])
+
+  useEffect(() => {
+    if (paused) return
+    const t = setInterval(next, INTERVAL)
+    return () => clearInterval(t)
+  }, [paused, next])
 
   return (
     <section className="bg-[var(--bg-main)] border-t border-[var(--border-main)] overflow-hidden">
@@ -85,6 +100,8 @@ export default function LatestNews() {
           ref={trackRef}
           className="flex gap-5 overflow-x-auto no-scrollbar pb-20 pr-6"
           style={{ scrollSnapType: 'x mandatory' }}
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
           onScroll={(e) => {
             const el = e.currentTarget
             const idx = Math.round(el.scrollLeft / (CARD_WIDTH + GAP))
