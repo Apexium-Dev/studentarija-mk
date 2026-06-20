@@ -64,6 +64,3 @@ body {
 .sponsor-track {
   animation: sponsor-scroll 35s linear infinite;
 }
-.sponsor-track:hover {
-  animation-play-state: paused;
-}
