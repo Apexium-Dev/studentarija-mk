@@ -7,10 +7,19 @@ import { events, cities, EN_MONTHS, MK_DAYS } from './events'
 
 const TODAY = new Date(2026, 5, 20)
 
-export default function EventCalendar() {
+interface Props {
+  onCityChange?: (city: string) => void
+}
+
+export default function EventCalendar({ onCityChange }: Props) {
   const [cur, setCur] = useState({ year: 2026, month: 5 })
   const [selectedCity, setSelectedCity] = useState('СКОПЈЕ')
   const [selectedDate, setSelectedDate] = useState<number | null>(null)
+
+  const handleCityChange = (city: string) => {
+    setSelectedCity(city)
+    onCityChange?.(city)
+  }
 
   const prevMonth = () => setCur(c => c.month === 0 ? { year: c.year - 1, month: 11 } : { year: c.year, month: c.month - 1 })
   const nextMonth = () => setCur(c => c.month === 11 ? { year: c.year + 1, month: 0 } : { year: c.year, month: c.month + 1 })
@@ -94,7 +103,7 @@ export default function EventCalendar() {
         {cities.map(city => (
           <button
             key={city}
-            onClick={() => setSelectedCity(city)}
+            onClick={() => handleCityChange(city)}
             className={[
               'relative px-3 py-2 font-display text-[10px] uppercase tracking-widest border rounded-lg transition-colors',
               selectedCity === city
