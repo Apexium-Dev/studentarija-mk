@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext, useCallback, useSyncExternalStore } from 'react'
+import { createContext, useContext, useCallback, useEffect, useSyncExternalStore } from 'react'
 
 export type Lang = 'mk' | 'en'
 
@@ -44,9 +44,9 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 
   const t = useCallback((mk: string, en: string) => lang === 'mk' ? mk : en, [lang])
 
-  if (typeof window !== 'undefined') {
-    document.documentElement.setAttribute('lang', lang === 'mk' ? 'mk' : 'en')
-  }
+  useEffect(() => {
+    document.documentElement.setAttribute('lang', lang)
+  }, [lang])
 
   return (
     <LangContext.Provider value={{ lang, toggle, t }}>
