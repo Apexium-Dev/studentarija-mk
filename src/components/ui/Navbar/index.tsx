@@ -4,21 +4,36 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { motion } from 'motion/react'
-import { GraduationCap, Search, Sun, Globe, UserRound, Menu } from 'lucide-react'
+import { GraduationCap, Search, Sun, Moon, Globe, UserRound, Menu } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { navLinks } from './links'
+import { useTheme } from '@/components/ui/ThemeProvider'
 import AktuelnoDropdown from './AktuelnoDropdown'
 import MobileMenu from './MobileMenu'
+import SearchOverlay from './SearchOverlay'
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
+  const [searchOpen, setSearchOpen] = useState(false)
   const pathname = usePathname()
+  const { theme, toggle } = useTheme()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10)
     window.addEventListener('scroll', onScroll)
     return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault()
+        setSearchOpen(true)
+      }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
   }, [])
 
   return (
@@ -37,7 +52,7 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-6 h-full flex items-center gap-6">
 
           {/* Logo */}
-          <Link href="/" className="flex items-center gap-2.5 shrink-0 group mr-2">
+          <Link href="/" className="flex items-center gap-2.5 shrink-0 mr-2">
             <GraduationCap className="w-6 h-6 text-primary" />
             <span className="font-black text-base tracking-tight uppercase text-[var(--text-main)]">
               Студентарија<span className="text-primary">.мк</span>
@@ -47,7 +62,6 @@ export default function Navbar() {
           {/* Desktop nav */}
           <nav className="hidden md:flex items-center gap-1 flex-1">
             <AktuelnoDropdown />
-
             {navLinks.map((link) => {
               const active = pathname === link.href
               return (
@@ -56,9 +70,7 @@ export default function Navbar() {
                   href={link.href}
                   className={cn(
                     'px-4 py-2 text-[11px] font-black uppercase tracking-widest transition-colors relative',
-                    active
-                      ? 'text-primary'
-                      : 'text-[var(--text-muted)] hover:text-[var(--text-main)]'
+                    active ? 'text-primary' : 'text-[var(--text-muted)] hover:text-[var(--text-main)]'
                   )}
                 >
                   {link.label}
@@ -74,17 +86,39 @@ export default function Navbar() {
           </nav>
 
           {/* Right actions */}
-          <div className="hidden md:flex items-center gap-2 ml-auto shrink-0">
-            <button className="w-9 h-9 flex items-center justify-center text-[var(--text-muted)] hover:text-[var(--text-main)] transition-colors">
+          <div className="hidden md:flex items-center gap-1 ml-auto shrink-0">
+
+            {/* Search */}
+            <button
+              onClick={() => setSearchOpen(true)}
+              className="flex items-center gap-2 h-9 px-3 rounded-lg border border-[var(--border-main)] text-[var(--text-muted)] hover:text-[var(--text-main)] hover:border-primary/30 transition-all group"
+            >
               <Search className="w-4 h-4" />
+              <span className="text-[10px] font-bold tracking-widest hidden lg:block">⌘K</span>
             </button>
-            <button className="w-9 h-9 flex items-center justify-center text-[var(--text-muted)] hover:text-[var(--text-main)] transition-colors">
-              <Sun className="w-4 h-4" />
+
+            {/* Theme toggle */}
+            <button
+              onClick={toggle}
+              className="w-9 h-9 flex items-center justify-center rounded-lg text-[var(--text-muted)] hover:text-[var(--text-main)] hover:bg-[var(--hover-bg)] transition-all"
+              aria-label="Toggle theme"
+            >
+              <motion.div
+                key={theme}
+                initial={{ rotate: -90, opacity: 0, scale: 0.5 }}
+                animate={{ rotate: 0, opacity: 1, scale: 1 }}
+                transition={{ duration: 0.25, ease: 'easeOut' }}
+              >
+                {theme === 'dark' ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+              </motion.div>
             </button>
-            <button className="w-9 h-9 flex items-center justify-center text-[var(--text-muted)] hover:text-[var(--text-main)] transition-colors font-black text-[11px] uppercase">
+
+            {/* Language */}
+            <button className="w-9 h-9 flex items-center justify-center rounded-lg text-[var(--text-muted)] hover:text-[var(--text-main)] hover:bg-[var(--hover-bg)] transition-all">
               <Globe className="w-4 h-4" />
             </button>
 
+            {/* Login CTA */}
             <Link
               href="/login"
               className="flex items-center gap-2 h-9 px-4 bg-primary text-dark font-black text-[11px] uppercase tracking-widest hover:bg-primary/90 transition-colors rounded-sm ml-1"
@@ -104,6 +138,7 @@ export default function Navbar() {
         </div>
       </motion.header>
 
+      <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
       <MobileMenu open={menuOpen} onClose={() => setMenuOpen(false)} />
     </>
   )

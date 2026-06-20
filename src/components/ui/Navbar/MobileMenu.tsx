@@ -10,7 +10,6 @@ interface Props {
   onClose: () => void
 }
 
-const allLinks = [{ label: 'Актуелно', href: '#', sub: aktuelnoItems }, ...navLinks.map(l => ({ ...l, sub: [] }))]
 
 export default function MobileMenu({ open, onClose }: Props) {
   return (
