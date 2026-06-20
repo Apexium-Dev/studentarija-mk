@@ -56,7 +56,7 @@ export default function Navbar() {
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5 shrink-0 mr-2">
             <GraduationCap className="w-6 h-6 text-primary" />
-            <span className="font-black text-base tracking-tight uppercase text-[var(--text-main)]">
+            <span className="font-display text-xl tracking-tight uppercase text-[var(--text-main)]">
               Студентарија<span className="text-primary">.мк</span>
             </span>
           </Link>

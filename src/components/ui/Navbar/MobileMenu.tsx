@@ -23,7 +23,7 @@ export default function MobileMenu({ open, onClose }: Props) {
           className="fixed inset-0 z-40 bg-[var(--bg-main)] flex flex-col overflow-y-auto"
         >
           <div className="flex items-center justify-between px-6 h-16 border-b border-[var(--border-main)] shrink-0">
-            <span className="font-black text-lg tracking-tighter uppercase">
+            <span className="font-display text-2xl tracking-tight uppercase">
               Студентарија<span className="text-primary">.мк</span>
             </span>
             <button onClick={onClose} className="w-10 h-10 flex items-center justify-center border border-[var(--border-main)] rounded-xl text-[var(--text-muted)] hover:text-primary transition-colors">

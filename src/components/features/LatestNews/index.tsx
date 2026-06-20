@@ -70,7 +70,7 @@ export default function LatestNews() {
                   <span className={cn('text-[9px] font-black uppercase tracking-widest block mb-1', categoryColors[item.category] ?? 'text-primary')}>
                     {item.category}
                   </span>
-                  <h3 className="text-sm font-black text-[var(--text-main)] group-hover:text-primary transition-colors line-clamp-1">
+                  <h3 className="text-sm font-display text-[var(--text-main)] group-hover:text-primary transition-colors line-clamp-1">
                     {item.title}
                   </h3>
                   <p className="text-[11px] text-[var(--text-muted)] line-clamp-1 mt-0.5 hidden md:block">
