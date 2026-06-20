@@ -15,7 +15,7 @@ export const sponsors: Sponsor[] = [
   {
     name: 'iskustvamk',
     description: 'Откриј, доживеј и уживај. Со @iskustvamk',
-    logo: 'https://gvksxgwsocfispsgrwgm.supabase.co/storage/v1/object/sign/logos/Screenshot%202026-05-08%20at%2013.24.36.png?token=eyJraWQiOiJzdG9yYWdlLXVybC1zaWduaW5nLWtleV83MzdlNjYxZC01YzY3LTRiNDgtODdmMy03YTBlM2QyM2ZiNDEiLCJhbGciOiJIUzI1NiJ9.eyJ1cmwiOiJsb2dvcy9TY3JlZW5zaG90IDIwMjYtMDUtMDggYXQgMTMuMjQuMzYucG5nIiwiaWF0IjoxNzc4MjM5NzI3LCJleHAiOjE4MDk3NzU3Mjd9.tBRgsxQonXM7uBTySf0O5-lf4VbfDpb7EhkEG-DPXdM',
+    logo: 'https://gvksxgwsocfispsgrwgm.supabase.co/storage/v1/object/public/logos/iskustvamk.png',
     href: '#',
   },
   {
