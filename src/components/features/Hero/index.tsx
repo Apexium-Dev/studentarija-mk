@@ -72,8 +72,8 @@ export default function Hero() {
                       style={
                         line.style === 'primary'
                           ? { color: '#ffc107' }
-                          : line.style === 'outline'
-                          ? { color: 'transparent', WebkitTextStroke: '2px white' }
+                          : line.style === 'dim'
+                          ? { color: 'rgba(255,255,255,0.35)' }
                           : { color: 'white' }
                       }
                     >
