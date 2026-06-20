@@ -6,8 +6,8 @@ import Lenis from 'lenis'
 export default function SmoothScroll() {
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 0.6,
-      easing: (t) => 1 - Math.pow(1 - t, 3),
+      duration: 0.4,
+      easing: (t) => 1 - Math.pow(1 - t, 2),
     })
 
     function raf(time: number) {
