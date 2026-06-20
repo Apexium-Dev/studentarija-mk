@@ -100,9 +100,9 @@ export default function LatestNews() {
             href="/news"
             className="group relative overflow-hidden flex items-center gap-3 h-14 px-10 rounded-full font-black text-[12px] uppercase tracking-[0.2em] border-2 border-primary text-primary hover:text-dark transition-colors duration-300"
           >
-            <span className="absolute inset-0 bg-primary -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out" />
-            <span className="relative">Сите вести</span>
-            <ArrowUpRight className="relative w-4 h-4 group-hover:rotate-45 transition-transform duration-300" />
+            <span className="absolute inset-0 bg-primary -translate-x-full group-hover:translate-x-0 transition-transform duration-300 ease-out z-0" />
+            <span className="relative z-10">Сите вести</span>
+            <ArrowUpRight className="relative z-10 w-4 h-4 group-hover:rotate-45 transition-transform duration-300" />
           </Link>
         </div>
 
