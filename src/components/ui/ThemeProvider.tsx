@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext, useCallback, useSyncExternalStore } from 'react'
+import { createContext, useContext, useCallback, useEffect, useSyncExternalStore } from 'react'
 
 type Theme = 'dark' | 'light'
 
@@ -37,10 +37,9 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     listeners.forEach(fn => fn())
   }, [])
 
-  // Apply class on mount / hydration
-  if (typeof window !== 'undefined') {
+  useEffect(() => {
     document.documentElement.classList.toggle('light', theme === 'light')
-  }
+  }, [theme])
 
   return (
     <ThemeContext.Provider value={{ theme, toggle }}>
