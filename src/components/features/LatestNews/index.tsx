@@ -1,11 +1,37 @@
 'use client'
 
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { ArrowRight } from 'lucide-react'
-import { motion } from 'motion/react'
+import { motion, useInView } from 'motion/react'
 import { cn } from '@/lib/utils'
 import { news, categoryColors } from './news'
+
+function Counter({ to }: { to: number }) {
+  const [count, setCount] = useState(0)
+  const ref = useRef<HTMLSpanElement>(null)
+  const inView = useInView(ref, { once: true })
+
+  useEffect(() => {
+    if (!inView) return
+    let start = 0
+    const duration = 1200
+    const step = duration / to
+    const timer = setInterval(() => {
+      start += 1
+      setCount(start)
+      if (start >= to) clearInterval(timer)
+    }, step)
+    return () => clearInterval(timer)
+  }, [inView, to])
+
+  return (
+    <span ref={ref}>
+      {String(count).padStart(2, '0')}
+    </span>
+  )
+}
 
 const DOUBLED = [...news, ...news]
 
@@ -38,9 +64,9 @@ export default function LatestNews() {
 
         {/* Main heading */}
         <div className="relative">
-          {/* Watermark number */}
+          {/* Counter watermark */}
           <span className="absolute -top-4 right-0 font-display text-[clamp(6rem,18vw,16rem)] leading-none text-[var(--border-main)] select-none pointer-events-none">
-            {String(news.length).padStart(2, '0')}
+            <Counter to={news.length} />
           </span>
 
           {/* Line 1 */}
