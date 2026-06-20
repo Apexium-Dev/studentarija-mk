@@ -18,7 +18,7 @@ function Counter({ to }: { to: number }) {
     const t = setInterval(() => { n++; setCount(n); if (n >= to) clearInterval(t) }, 1200 / to)
     return () => clearInterval(t)
   }, [inView, to])
-  return <span ref={ref}>{String(count).padStart(2, '0')}</span>
+  return <span ref={ref}>{count}</span>
 }
 
 export default function LatestNews() {
