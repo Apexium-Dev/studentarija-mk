@@ -55,7 +55,7 @@ const socials = [
 
 export default function Footer() {
   return (
-    <footer className="bg-[#080808] text-white overflow-hidden">
+    <footer className="bg-[var(--bg-secondary)] overflow-hidden border-t border-[var(--border-main)]">
 
       {/* Top grid */}
       <div className="max-w-7xl mx-auto px-6 pt-16 pb-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
@@ -64,11 +64,11 @@ export default function Footer() {
         <div className="flex flex-col gap-6">
           <Link href="/" className="flex items-center gap-2.5 group">
             <GraduationCap className="w-6 h-6 text-primary" />
-            <span className="font-display text-xl uppercase text-white">
+            <span className="font-display text-xl uppercase text-[var(--text-main)]">
               Студентарија<span className="text-primary">.мк</span>
             </span>
           </Link>
-          <p className="text-sm text-white/40 leading-relaxed max-w-[220px]">
+          <p className="text-sm text-[var(--text-muted)] leading-relaxed max-w-[220px]">
             Најголемата студентска платформа во Македонија.
           </p>
           <div className="flex items-center gap-3 mt-auto">
@@ -79,7 +79,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={label}
-                className="w-9 h-9 rounded-lg border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:border-white/30 transition-all"
+                className="w-9 h-9 rounded-lg border border-[var(--border-main)] flex items-center justify-center text-[var(--text-muted)] hover:text-primary hover:border-primary/40 transition-all"
               >
                 <Icon />
               </Link>
@@ -90,7 +90,7 @@ export default function Footer() {
         {/* Link cols */}
         {cols.map(col => (
           <div key={col.heading} className="flex flex-col gap-4">
-            <span className="font-display text-[10px] tracking-[0.25em] uppercase text-white/30">
+            <span className="font-display text-[10px] tracking-[0.25em] uppercase text-[var(--text-muted)]">
               {col.heading}
             </span>
             <ul className="flex flex-col gap-2.5">
@@ -98,7 +98,7 @@ export default function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm text-white/50 hover:text-white transition-colors font-sans"
+                    className="text-sm text-[var(--text-muted)] hover:text-[var(--text-main)] transition-colors font-sans"
                   >
                     {link.label}
                   </Link>
@@ -110,12 +110,12 @@ export default function Footer() {
       </div>
 
       {/* Divider */}
-      <div className="border-t border-white/5" />
+      <div className="border-t border-[var(--border-main)]" />
 
       {/* Big display text */}
       <div className="px-4 pt-6 pb-0 overflow-hidden select-none pointer-events-none">
         <p
-          className="font-display uppercase leading-none text-white/[0.04] whitespace-nowrap"
+          className="font-display uppercase leading-none text-[var(--text-main)] opacity-[0.04] whitespace-nowrap"
           style={{ fontSize: 'clamp(4rem, 15vw, 14rem)' }}
         >
           СТУДЕНТАРИЈА.МК
@@ -124,12 +124,12 @@ export default function Footer() {
 
       {/* Bottom bar */}
       <div className="max-w-7xl mx-auto px-6 pb-6 flex flex-col sm:flex-row items-center justify-between gap-3">
-        <p className="text-[11px] text-white/20 font-display tracking-wider uppercase">
+        <p className="text-[11px] text-[var(--text-muted)] font-display tracking-wider uppercase">
           © 2026 Студентарија.мк — Сите права задржани
         </p>
         <div className="flex items-center gap-4">
-          <Link href="/privacy" className="text-[11px] text-white/20 hover:text-white/50 transition-colors font-display uppercase tracking-wider">Приватност</Link>
-          <Link href="/terms"   className="text-[11px] text-white/20 hover:text-white/50 transition-colors font-display uppercase tracking-wider">Услови</Link>
+          <Link href="/privacy" className="text-[11px] text-[var(--text-muted)] hover:text-[var(--text-main)] transition-colors font-display uppercase tracking-wider">Приватност</Link>
+          <Link href="/terms"   className="text-[11px] text-[var(--text-muted)] hover:text-[var(--text-main)] transition-colors font-display uppercase tracking-wider">Услови</Link>
         </div>
       </div>
 

@@ -73,14 +73,14 @@ export default function CommunitySection() {
   const inView = useInView(ref, { once: true, margin: '-80px' })
 
   return (
-    <section ref={ref} className="bg-black py-24 px-6 text-center">
+    <section ref={ref} className="bg-[var(--bg-main)] py-24 px-6 text-center border-t border-[var(--border-main)]">
 
       {/* Label */}
       <motion.p
         initial={{ opacity: 0, y: 10 }}
         animate={inView ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.4 }}
-        className="font-display text-[10px] tracking-[0.3em] uppercase text-white/40 mb-4"
+        className="font-display text-[10px] tracking-[0.3em] uppercase text-[var(--text-muted)] mb-4"
       >
         ПРИДРУЖИ СЕ НА
       </motion.p>
@@ -109,7 +109,7 @@ export default function CommunitySection() {
         initial={{ opacity: 0 }}
         animate={inView ? { opacity: 1 } : {}}
         transition={{ delay: 0.3 }}
-        className="font-display text-[10px] tracking-[0.25em] uppercase text-white/40 mb-8"
+        className="font-display text-[10px] tracking-[0.25em] uppercase text-[var(--text-muted)] mb-8"
       >
         НАЈГОЛЕМАТА СТУДЕНТСКА МРЕЖА НА{' '}
         <span
@@ -142,7 +142,7 @@ export default function CommunitySection() {
           <Counter to={60000} suffix="+" />
         </span>
         <span
-          className="font-display uppercase leading-none text-white"
+          className="font-display uppercase leading-none text-[var(--text-main)]"
           style={{ fontSize: 'clamp(3rem, 10vw, 8rem)' }}
         >
           СТУДЕНТИ
@@ -154,7 +154,7 @@ export default function CommunitySection() {
         initial={{ opacity: 0 }}
         animate={inView ? { opacity: 1 } : {}}
         transition={{ delay: 0.4 }}
-        className="font-display text-[10px] tracking-[0.3em] uppercase text-white/40 mb-14"
+        className="font-display text-[10px] tracking-[0.3em] uppercase text-[var(--text-muted)] mb-14"
       >
         ВО МАКЕДОНИЈА
       </motion.p>
@@ -172,12 +172,12 @@ export default function CommunitySection() {
             href={href}
             target="_blank"
             rel="noopener noreferrer"
-            className="group flex items-center gap-2.5 h-12 px-6 bg-[#111111] hover:bg-[#1a1a1a] border border-white/8 hover:border-white/20 rounded-xl transition-all"
+            className="group flex items-center gap-2.5 h-12 px-6 bg-[var(--bg-secondary)] hover:bg-[var(--hover-bg)] border border-[var(--border-main)] hover:border-primary/30 rounded-xl transition-all"
           >
-            <span className="text-white/60 group-hover:text-white transition-colors flex items-center">
+            <span className="text-[var(--text-muted)] group-hover:text-[var(--text-main)] transition-colors flex items-center">
               <Icon />
             </span>
-            <span className="font-display text-[11px] tracking-widest uppercase text-white/60 group-hover:text-white transition-colors">
+            <span className="font-display text-[11px] tracking-widest uppercase text-[var(--text-muted)] group-hover:text-[var(--text-main)] transition-colors">
               {label}
             </span>
           </Link>
