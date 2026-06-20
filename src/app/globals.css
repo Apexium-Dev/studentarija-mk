@@ -52,4 +52,3 @@ body {
   to   { transform: translateX(-50%) }
 }
 .news-scroll { animation: news-scroll 40s linear infinite; }
-.news-scroll-wrapper:hover .news-scroll { animation-play-state: paused; }
