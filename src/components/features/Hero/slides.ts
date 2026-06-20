@@ -7,6 +7,7 @@ export interface HeroSlide {
   lines: HeroLine[]
   description: string
   bg: string
+  image: string
 }
 
 export const slides: HeroSlide[] = [
@@ -18,6 +19,7 @@ export const slides: HeroSlide[] = [
     ],
     description: 'Ошче сега ви викаме да си го закажете 16 мај за фоф Берово затоа шо ќе е пројако!',
     bg: 'from-zinc-950 via-zinc-900 to-zinc-950',
+    image: 'https://picsum.photos/seed/student1/1600/900',
   },
   {
     lines: [
@@ -27,6 +29,7 @@ export const slides: HeroSlide[] = [
     ],
     description: 'Фала ви на сите кои го поддржавте овој настан — @ukim_skopje @vibeon.mk @sparkassemk',
     bg: 'from-stone-950 via-neutral-900 to-stone-950',
+    image: 'https://picsum.photos/seed/campus2/1600/900',
   },
   {
     lines: [
@@ -36,5 +39,6 @@ export const slides: HeroSlide[] = [
     ],
     description: 'Сè на едно место — стипендии, домови, настани, огласи и уште многу повеќе.',
     bg: 'from-neutral-950 via-zinc-900 to-neutral-950',
+    image: 'https://picsum.photos/seed/university3/1600/900',
   },
 ]
