@@ -35,7 +35,7 @@ export default function AktuelnoDropdown() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 8, scale: 0.97 }}
             transition={{ duration: 0.15, ease: 'easeOut' }}
-            className="absolute top-full left-0 mt-3 w-[520px] bg-[#111111] border border-[var(--border-main)] rounded-2xl p-6 grid grid-cols-2 gap-x-8 gap-y-1 shadow-2xl z-50"
+            className="absolute top-full left-0 mt-3 w-[520px] bg-[var(--bg-secondary)] border border-[var(--border-main)] rounded-2xl p-6 grid grid-cols-2 gap-x-8 gap-y-1 shadow-2xl z-50"
           >
             {aktuelnoItems.map((item) => (
               <Link
