@@ -3,6 +3,7 @@ import LatestNews from '@/components/features/LatestNews'
 import EventsSection from '@/components/features/Events'
 import CommunitySection from '@/components/features/Community'
 import SponsorsSection from '@/components/features/Sponsors'
+import NewsletterSection from '@/components/features/Newsletter'
 
 export default function Home() {
   return (
@@ -12,6 +13,7 @@ export default function Home() {
       <EventsSection />
       <CommunitySection />
       <SponsorsSection />
+      <NewsletterSection />
     </main>
   )
 }
