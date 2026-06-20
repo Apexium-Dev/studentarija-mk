@@ -19,7 +19,9 @@ export default function SearchOverlay({ open, onClose }: Props) {
   const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
-    if (open) setTimeout(() => inputRef.current?.focus(), 80)
+    if (!open) return
+    const id = setTimeout(() => inputRef.current?.focus(), 80)
+    return () => clearTimeout(id)
   }, [open])
 
   useEffect(() => {
