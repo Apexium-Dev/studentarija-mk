@@ -2,7 +2,7 @@ import { sponsors } from './sponsors'
 
 function SponsorCard({ sponsor }: { sponsor: typeof sponsors[0] }) {
   return (
-    <div className="flex flex-col items-center gap-3 px-6 shrink-0 group cursor-pointer">
+    <div className="flex flex-col items-center gap-3 px-14 shrink-0 group cursor-pointer">
       <div className="w-20 h-20 rounded-2xl overflow-hidden bg-white flex items-center justify-center shadow-sm opacity-60 group-hover:opacity-100 group-hover:scale-105 transition-all duration-300">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
