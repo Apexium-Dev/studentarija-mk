@@ -16,16 +16,16 @@
 
 /* ── Light theme ── */
 .light {
-  --bg-main:      #ffffff;
-  --bg-secondary: #f5f5f5;
-  --hover-bg:     #eeeeee;
-  --border-main:  rgba(0, 0, 0, 0.08);
-  --text-main:    #111111;
-  --text-muted:   rgba(0, 0, 0, 0.4);
-  --primary:      #ffc107;
+  --bg-main:      #f7f6f3;
+  --bg-secondary: #efede8;
+  --hover-bg:     #e8e5de;
+  --border-main:  rgba(0, 0, 0, 0.09);
+  --text-main:    #111110;
+  --text-muted:   rgba(17, 17, 16, 0.42);
+  --primary:      #e6a800;
   --dark:         #0a0a0a;
-  --background:   #ffffff;
-  --foreground:   #111111;
+  --background:   #f7f6f3;
+  --foreground:   #111110;
 }
 
 @theme inline {
