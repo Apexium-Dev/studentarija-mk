@@ -33,7 +33,10 @@ export default function QuickNav() {
         .eq('published', true)
         .order('created_at', { ascending: false })
         .limit(3)
-      if (error) throw new Error(error.message)
+      if (error) {
+        console.error('[QuickNav] Failed to fetch announcements:', error.message)
+        return
+      }
       if (data) setAnnouncements(data)
     }
 
