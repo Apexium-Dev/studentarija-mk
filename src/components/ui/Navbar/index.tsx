@@ -4,10 +4,11 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { motion } from 'motion/react'
-import { GraduationCap, Search, Sun, Moon, Globe, UserRound, Menu } from 'lucide-react'
+import { GraduationCap, Search, Sun, Moon, UserRound, Menu } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { navLinks } from './links'
 import { useTheme } from '@/components/ui/ThemeProvider'
+import { useLang } from '@/components/ui/LanguageProvider'
 import AktuelnoDropdown from './AktuelnoDropdown'
 import MobileMenu from './MobileMenu'
 import SearchOverlay from './SearchOverlay'
@@ -18,6 +19,7 @@ export default function Navbar() {
   const [searchOpen, setSearchOpen] = useState(false)
   const pathname = usePathname()
   const { theme, toggle } = useTheme()
+  const { lang, toggle: toggleLang } = useLang()
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10)
@@ -114,8 +116,20 @@ export default function Navbar() {
             </button>
 
             {/* Language */}
-            <button className="w-9 h-9 flex items-center justify-center rounded-lg text-[var(--text-muted)] hover:text-[var(--text-main)] hover:bg-[var(--hover-bg)] transition-all">
-              <Globe className="w-4 h-4" />
+            <button
+              onClick={toggleLang}
+              className="h-9 px-2.5 flex items-center gap-1.5 rounded-lg text-[var(--text-muted)] hover:text-[var(--text-main)] hover:bg-[var(--hover-bg)] transition-all"
+              aria-label="Toggle language"
+            >
+              <motion.span
+                key={lang}
+                initial={{ opacity: 0, y: -6 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.2 }}
+                className="text-[11px] font-black uppercase tracking-widest"
+              >
+                {lang === 'mk' ? 'МК' : 'EN'}
+              </motion.span>
             </button>
 
             {/* Login CTA */}
