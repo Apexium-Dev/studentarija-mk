@@ -43,7 +43,7 @@ export default function LatestNews() {
 
         {/* News rows */}
         <div className="flex flex-col">
-          {news.map((item, i) => (
+          {news.slice(0, 5).map((item, i) => (
             <motion.div
               key={item.id}
               initial={{ opacity: 0, y: 12 }}
