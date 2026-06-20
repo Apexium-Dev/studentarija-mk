@@ -37,6 +37,10 @@
   --font-display: var(--font-display);
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background: var(--bg-main);
   color: var(--text-main);
