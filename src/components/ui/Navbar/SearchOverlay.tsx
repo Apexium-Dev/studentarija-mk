@@ -3,6 +3,7 @@
 import { useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import { Search, X, ArrowRight } from 'lucide-react'
+import Link from 'next/link'
 import { aktuelnoItems, navLinks } from './links'
 
 const suggestions = [
@@ -78,7 +79,7 @@ export default function SearchOverlay({ open, onClose }: Props) {
                 </p>
                 <div className="grid grid-cols-2 gap-1">
                   {suggestions.map((s) => (
-                    <a
+                    <Link
                       key={s.href}
                       href={s.href}
                       onClick={onClose}
@@ -86,7 +87,7 @@ export default function SearchOverlay({ open, onClose }: Props) {
                     >
                       <span className="text-sm font-bold text-[var(--text-main)]">{s.label}</span>
                       <ArrowRight className="w-3.5 h-3.5 text-[var(--text-muted)] opacity-0 group-hover:opacity-100 group-hover:text-primary transition-all" />
-                    </a>
+                    </Link>
                   ))}
                 </div>
               </div>
