@@ -56,3 +56,14 @@ body {
   to   { transform: translateX(-50%) }
 }
 .news-scroll { animation: news-scroll 40s linear infinite; }
+
+@keyframes sponsor-scroll {
+  from { transform: translateX(0) }
+  to   { transform: translateX(-50%) }
+}
+.sponsor-track {
+  animation: sponsor-scroll 35s linear infinite;
+}
+.sponsor-track:hover {
+  animation-play-state: paused;
+}
