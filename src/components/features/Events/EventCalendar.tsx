@@ -5,14 +5,14 @@ import { motion } from 'motion/react'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import { events, cities, EN_MONTHS, MK_DAYS } from './events'
 
-const TODAY = new Date(2026, 5, 20)
+const TODAY = new Date()
 
 interface Props {
   onCityChange?: (city: string) => void
 }
 
 export default function EventCalendar({ onCityChange }: Props) {
-  const [cur, setCur] = useState({ year: 2026, month: 5 })
+  const [cur, setCur] = useState({ year: TODAY.getFullYear(), month: TODAY.getMonth() })
   const [selectedCity, setSelectedCity] = useState('СКОПЈЕ')
   const [selectedDate, setSelectedDate] = useState<number | null>(null)
 

@@ -40,7 +40,10 @@ export default function DailyCard() {
       .order('created_at', { ascending: false })
       .limit(1)
       .single()
-      .then(({ data }) => { if (data) setMsg(data) })
+      .then(({ data, error }) => {
+        if (error) console.error('[DailyCard]', error.message)
+        else if (data) setMsg(data)
+      })
 
     const t = setTimeout(() => setVisible(true), 100)
     return () => clearTimeout(t)
