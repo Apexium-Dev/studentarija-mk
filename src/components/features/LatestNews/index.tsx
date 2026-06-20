@@ -1,51 +1,19 @@
 'use client'
 
-import { useRef, useState, useCallback, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react'
+import { ArrowRight } from 'lucide-react'
 import { motion } from 'motion/react'
 import { cn } from '@/lib/utils'
 import { news, categoryColors } from './news'
 
-const CARD_WIDTH = 320
-const GAP = 20
-
-const INTERVAL = 3000
+const DOUBLED = [...news, ...news]
 
 export default function LatestNews() {
-  const trackRef = useRef<HTMLDivElement>(null)
-  const [activeIndex, setActiveIndex] = useState(0)
-  const [paused, setPaused] = useState(false)
-
-  const scrollTo = useCallback((index: number) => {
-    const clamped = Math.max(0, Math.min(index, news.length - 1))
-    setActiveIndex(clamped)
-    trackRef.current?.scrollTo({
-      left: clamped * (CARD_WIDTH + GAP),
-      behavior: 'smooth',
-    })
-  }, [])
-
-  const prev = () => scrollTo(activeIndex - 1)
-  const next = useCallback(() => {
-    setActiveIndex(i => {
-      const nextIndex = (i + 1) % news.length
-      trackRef.current?.scrollTo({ left: nextIndex * (CARD_WIDTH + GAP), behavior: 'smooth' })
-      return nextIndex
-    })
-  }, [])
-
-  useEffect(() => {
-    if (paused) return
-    const t = setInterval(next, INTERVAL)
-    return () => clearInterval(t)
-  }, [paused, next])
-
   return (
     <section className="bg-[var(--bg-main)] border-t border-[var(--border-main)] overflow-hidden">
 
-      {/* Header row */}
+      {/* Header */}
       <div className="max-w-7xl mx-auto px-6 pt-20 pb-12 flex items-end justify-between gap-8">
         <div>
           <div className="flex items-center gap-3 mb-6">
@@ -68,54 +36,26 @@ export default function LatestNews() {
           </div>
         </div>
 
-        {/* Right: nav + CTA */}
-        <div className="flex items-center gap-3 shrink-0">
-          <button
-            onClick={prev}
-            disabled={activeIndex === 0}
-            className="w-10 h-10 flex items-center justify-center rounded-full border border-[var(--border-main)] text-[var(--text-muted)] hover:text-[var(--text-main)] hover:border-primary/40 disabled:opacity-30 transition-all"
-          >
-            <ChevronLeft className="w-4 h-4" />
-          </button>
-          <button
-            onClick={next}
-            disabled={activeIndex === news.length - 1}
-            className="w-10 h-10 flex items-center justify-center rounded-full border border-[var(--border-main)] text-[var(--text-muted)] hover:text-[var(--text-main)] hover:border-primary/40 disabled:opacity-30 transition-all"
-          >
-            <ChevronRight className="w-4 h-4" />
-          </button>
-          <Link
-            href="/news"
-            className="group flex items-center gap-2 h-10 px-5 border border-[var(--border-main)] hover:border-primary/40 hover:bg-[var(--hover-bg)] transition-all text-[11px] font-black uppercase tracking-widest text-[var(--text-muted)] hover:text-[var(--text-main)]"
-          >
-            Види ги сите
-            <ArrowRight className="w-3.5 h-3.5 text-primary group-hover:translate-x-1 transition-transform" />
-          </Link>
-        </div>
+        <Link
+          href="/news"
+          className="shrink-0 group flex items-center gap-2 h-10 px-5 border border-[var(--border-main)] hover:border-primary/40 hover:bg-[var(--hover-bg)] transition-all text-[11px] font-black uppercase tracking-widest text-[var(--text-muted)] hover:text-[var(--text-main)]"
+        >
+          Види ги сите
+          <ArrowRight className="w-3.5 h-3.5 text-primary group-hover:translate-x-1 transition-transform" />
+        </Link>
       </div>
 
-      {/* Carousel track */}
-      <div className="pl-6 max-w-7xl mx-auto">
-        <div
-          ref={trackRef}
-          className="flex gap-5 overflow-x-auto no-scrollbar pb-20 pr-6"
-          style={{ scrollSnapType: 'x mandatory' }}
-          onMouseEnter={() => setPaused(true)}
-          onMouseLeave={() => setPaused(false)}
-          onScroll={(e) => {
-            const el = e.currentTarget
-            const idx = Math.round(el.scrollLeft / (CARD_WIDTH + GAP))
-            setActiveIndex(idx)
-          }}
-        >
-          {news.map((item, i) => (
+      {/* Infinite scroll track */}
+      <div className="news-scroll-wrapper pb-20">
+        <div className="news-scroll flex gap-5" style={{ width: 'max-content' }}>
+          {DOUBLED.map((item, i) => (
             <motion.div
-              key={item.id}
-              initial={{ opacity: 0, y: 24 }}
+              key={`${item.id}-${i}`}
+              initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.06, duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-              style={{ scrollSnapAlign: 'start', minWidth: CARD_WIDTH, maxWidth: CARD_WIDTH }}
+              transition={{ delay: (i % news.length) * 0.04, duration: 0.4 }}
+              style={{ width: 300 }}
             >
               <Link
                 href={item.href}
@@ -128,7 +68,7 @@ export default function LatestNews() {
                     alt={item.title}
                     fill
                     className="object-cover group-hover:scale-105 transition-transform duration-700"
-                    sizes="320px"
+                    sizes="300px"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
                   <span className={cn('absolute top-3 left-3 text-[10px] font-black uppercase tracking-widest bg-black/60 backdrop-blur-sm px-2 py-1 rounded', categoryColors[item.category] ?? 'text-primary')}>
@@ -137,14 +77,14 @@ export default function LatestNews() {
                 </div>
 
                 {/* Content */}
-                <div className="p-5 flex flex-col flex-1">
+                <div className="p-5 flex flex-col">
                   <h3 className="text-sm font-black text-[var(--text-main)] leading-snug tracking-tight mb-2 group-hover:text-primary transition-colors line-clamp-2">
                     {item.title}
                   </h3>
                   <p className="text-[11px] text-[var(--text-muted)] leading-relaxed line-clamp-2 mb-4">
                     {item.excerpt}
                   </p>
-                  <div className="flex items-center justify-between mt-auto">
+                  <div className="flex items-center justify-between">
                     <span className="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-wider">
                       {item.date}
                     </span>
@@ -155,20 +95,6 @@ export default function LatestNews() {
             </motion.div>
           ))}
         </div>
-      </div>
-
-      {/* Dot indicators */}
-      <div className="flex justify-center gap-1.5 pb-10">
-        {news.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => scrollTo(i)}
-            className={cn(
-              'rounded-full transition-all duration-300',
-              i === activeIndex ? 'w-6 h-1.5 bg-primary' : 'w-1.5 h-1.5 bg-[var(--border-main)] hover:bg-[var(--text-muted)]'
-            )}
-          />
-        ))}
       </div>
 
     </section>

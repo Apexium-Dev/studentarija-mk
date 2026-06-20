@@ -46,3 +46,10 @@ body {
 
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+@keyframes news-scroll {
+  from { transform: translateX(0) }
+  to   { transform: translateX(-50%) }
+}
+.news-scroll { animation: news-scroll 40s linear infinite; }
+.news-scroll-wrapper:hover .news-scroll { animation-play-state: paused; }
